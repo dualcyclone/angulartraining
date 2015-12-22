@@ -10,6 +10,7 @@ app.controller('RegistrationControl', function($scope, $http) {
 
 		if (!regForm.$valid) {
 			console.log('the form was invalid; rejecting...');
+
 			return;
 		}
 

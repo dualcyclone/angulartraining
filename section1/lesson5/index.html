@@ -21,8 +21,8 @@
 		  name="registrationForm">
 		<div class="form-group" ng-class="
 			{
-				'has-error': !registrationForm.name.$pristine && !registrationForm.name.$valid,
-				'has-success': !registrationForm.name.$pristine && registrationForm.name.$valid
+				'has-error': (!registrationForm.name.$pristine || registrationForm.$submitted) && !registrationForm.name.$valid,
+				'has-success': (!registrationForm.name.$pristine || registrationForm.$submitted) && registrationForm.name.$valid
 			}
 		">
 			<label for="name">Name</label>
@@ -32,12 +32,16 @@
 				   name="name"
 				   ng-model="formModel.name"
 				   required="required">
+
+			<p class="help-block" ng-show="(!registrationForm.name.$pristine || registrationForm.$submitted) && registrationForm.name.$error.required">
+				The field is required
+			</p>
 		</div>
 
 		<div class="form-group" ng-class="
 			{
-				'has-error': !registrationForm.email.$pristine && !registrationForm.email.$valid,
-				'has-success': !registrationForm.email.$pristine && registrationForm.email.$valid
+				'has-error': (!registrationForm.email.$pristine || registrationForm.$submitted) && !registrationForm.email.$valid,
+				'has-success': (!registrationForm.email.$pristine || registrationForm.$submitted) && registrationForm.email.$valid
 			}
 		">
 			<label for="email">Email</label>
@@ -48,12 +52,25 @@
 				   ng-model="formModel.email"
 				   required="required">
 
-			<pre>{{ registrationForm.email.$error | json }}</pre>
-			<pre>Is this field valid? {{ registrationForm.email.$valid }}</pre>
-			<pre>Is this field pristine? {{ registrationForm.email.$pristine }}</pre>
+			<p class="help-block" ng-show="(!registrationForm.email.$pristine || registrationForm.$submitted) && registrationForm.email.$error.required">
+				The field is required
+			</p>
+			<p class="help-block" ng-show="(!registrationForm.email.$pristine || registrationForm.$submitted) && registrationForm.email.$error.email">
+				Please input a valid email address
+			</p>
+
+			<!--<pre>Validation: {{ registrationForm.email.$error | json }}</pre>-->
+			<!--<pre>Is this field valid? {{ registrationForm.email.$valid }}</pre>-->
+			<!--<pre>Is this field pristine? {{ registrationForm.email.$pristine }}</pre>-->
+			<!--<pre>Has the form been submitted? {{ registrationForm.$submitted }}</pre>-->
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" ng-class="
+			{
+				'has-error': (!registrationForm.username.$pristine || registrationForm.$submitted) && !registrationForm.username.$valid,
+				'has-success': (!registrationForm.username.$pristine || registrationForm.$submitted) && registrationForm.username.$valid
+			}
+		">
 			<label for="username">Username</label>
 			<input type="text"
 				   class="form-control"
@@ -61,6 +78,10 @@
 				   name="username"
 				   ng-model="formModel.username"
 				   required="required">
+
+			<p class="help-block" ng-show="(!registrationForm.username.$pristine || registrationForm.$submitted) && registrationForm.username.$error.required">
+				The field is required
+			</p>
 		</div>
 
 		<div class="form-group">
@@ -84,7 +105,12 @@
 			</select>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" ng-class="
+			{
+				'has-error': (!registrationForm.password.$pristine || registrationForm.$submitted) && !registrationForm.password.$valid,
+				'has-success': (!registrationForm.password.$pristine || registrationForm.$submitted) && registrationForm.password.$valid
+			}
+		">
 			<label for="password">Password</label>
 			<input type="password"
 				   class="form-control"
@@ -92,6 +118,10 @@
 				   name="password"
 				   ng-model="formModel.password"
 				   required="required">
+
+			<p class="help-block" ng-show="(!registrationForm.password.$pristine || registrationForm.$submitted) && registrationForm.password.$error.required">
+				The field is required
+			</p>
 		</div>
 
 		<div class="form-group">
