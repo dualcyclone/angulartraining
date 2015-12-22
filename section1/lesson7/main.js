@@ -1,31 +1,39 @@
-var app = angular.module('minmax', [
-	'jcs-autoValidate'
+'use strict';
+
+var app = angular.module('Registration', [
+	'jcs-autoValidate', // Adding dependency: angular-auto-validate
+	'angular-ladda'
 ]);
 
-app.run(function (defaultErrorMessageResolver) {
-		defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
-			errorMessages['tooYoung'] = 'You must be at least {0} years old to use this site';
-			errorMessages['tooOld'] = 'You must be max {0} years old to use this site';
-			errorMessages['badUsername'] = 'Username can only contain numbers and letters and _';
-		});
-	}
-);
+// Adding additional error messages to make the form validation messages user friendly
+app.run(function(defaultErrorMessageResolver){
+	defaultErrorMessageResolver.getErrorMessages()
+		.then(function(errorMessages) {
+			errorMessages['tooYoung'] = 'You need to be at least {0} years of age';
+			errorMessages['tooOld'] = 'You need to be no more than {0} years of age';
+			errorMessages['badUsername'] = 'Your username must be between 7 and 15 characters, and only contain letters (upper or lower case), numbers and underscore';
+		})
+});
 
-
-app.controller('MinMaxCtrl', function ($scope, $http) {
+app.controller('RegistrationControl', function($scope, $http) {
 	$scope.formModel = {};
+	$scope.submitting = false;
 
-	$scope.onSubmit = function () {
+	$scope.onSubmit = function() {
+		$scope.submitting = true;
 
-		console.log("Hey i'm submitted!");
-		console.log($scope.formModel);
+		console.log('SUBMIT!',$scope.formModel);
 
-		$http.post('https://minmax-server.herokuapp.com/register/', $scope.formModel).
-			success(function (data) {
-				console.log(":)")
-			}).error(function(data) {
-				console.log(":(")
+		$http.post('https://minmax-server.herokuapp.com/register/', $scope.formModel)
+			.success(function(data) {
+				console.log('Success...',data);
+			})
+			.error(function(data) {
+				// to get this to error with the above endpoint, the name needs to be "error" :-/
+				console.log('Error...',data);
+			})
+			.finally(function() {
+				$scope.submitting = false;
 			});
-
 	};
 });

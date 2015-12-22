@@ -1,109 +1,120 @@
-<!DOCTYPE html >
-<html lang="en" ng-app="minmax">
-<head >
-	<title >Form Validation - Part 3</title >
-	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
-	<link href="main.css" rel="stylesheet" >
-</head >
+<!DOCTYPE html>
+<html lang="en" ng-app="Registration">
+<head>
+	<title>Form Submission</title>
+	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../libs/ladda/dist/ladda-themeless.min.css" rel="stylesheet">
+	<link href="main.css" rel="stylesheet">
+</head>
 
-<body >
-<nav class="navbar navbar-inverse navbar-fixed-top" >
-	<div class="container" >
-		<div class="navbar-header" >
-			<a class="navbar-brand"
-			   href="/" >Form Validation - Part 3
-			</a >
-		</div >
-	</div >
-</nav >
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Form Submitting</a>
+		</div>
+	</div>
+</nav>
 
-<div class="container main-content" ng-controller="MinMaxCtrl">
-
+<div class="container main-content" ng-controller="RegistrationControl">
 	<form ng-submit="onSubmit()"
-				novalidate="novalidate">
-		<div class="form-group" >
-			<label for="name" class="control-label">Name</label >
+		  novalidate="novalidate">
+		<div class="form-group">
+			<label for="name">Name</label>
 			<input type="text"
-			       class="form-control"
-			       ng-model="formModel.name"
-			       id="name"
-					   required="required" >
-		</div >
+				   class="form-control"
+				   id="name"
+				   name="name"
+				   ng-model="formModel.name"
+				   required="required">
+		</div>
 
 		<div class="form-group">
-			<label for="email" class="control-label">Email</label >
+			<label for="email">Email</label>
 			<input type="email"
-			       class="form-control"
-			       ng-model="formModel.email"
-			       id="email"
-					   required="required" >
-		</div >
+				   class="form-control"
+				   id="email"
+				   name="email"
+				   ng-model="formModel.email"
+				   required="required">
 
-		<div class="form-group" >
-			<label for="username" class="control-label">Username</label >
+			<!--<pre>Validation: {{ registrationForm.email.$error | json }}</pre>-->
+			<!--<pre>Is this field valid? {{ registrationForm.email.$valid }}</pre>-->
+			<!--<pre>Is this field pristine? {{ registrationForm.email.$pristine }}</pre>-->
+			<!--<pre>Has the form been submitted? {{ registrationForm.$submitted }}</pre>-->
+		</div>
+
+		<div class="form-group">
+			<label for="username">Username</label>
 			<input type="text"
-			       class="form-control"
-			       ng-model="formModel.username"
-			       ng-pattern="/^[A-Za-z0-9_]{1,32}$/"
-			       ng-minlength="7"
-			       ng-pattern-err-type="badUsername"
-			       id="username"
-			       required="required" >
-		</div >
+				   class="form-control"
+				   id="username"
+				   name="username"
+				   ng-model="formModel.username"
+				   ng-pattern="/^[A-Za-z0-9_]{7,15}$/"
+				   ng-pattern-err-type="badUsername"
+				   required="required">
+		</div>
 
-		<div class="form-group" >
-			<label for="age" class="control-label">Age</label >
+		<div class="form-group">
+			<label for="age">Age</label>
 			<input type="number"
-			       class="form-control"
-			       ng-model="formModel.age"
-			       min="18"
-			       max="64"
-			       id="age"
-			       ng-min-err-type="tooYoung"
-			       ng-max-err-type="tooOld"
-			       required="required" >
-		</div >
+				   class="form-control"
+				   id="age"
+				   name="age"
+				   ng-model="formModel.age"
+				   min="18"
+				   max="99"
+				   ng-min-err-type="tooYoung"
+				   ng-max-err-type="tooYoung"
+				   required="required">
+		</div>
 
-		<div class="form-group" >
-			<label for="sex" class="control-label">Sex</label >
-			<select id="sex"
-							class="form-control"
-							ng-model="formModel.sex"
-							required="required" >
-				<option value="" >Please Choose</option >
-				<option value="male" >Male</option >
-				<option value="female" >Female</option >
-			</select >
-		</div >
+		<div class="form-group">
+			<label for="gender">Gender</label>
+			<select name="gender"
+					id="gender"
+					class="form-control"
+					ng-model="formModel.gender">
+				<option value="">Please Choose</option>
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+		</div>
 
-		<div class="form-group" >
-			<label for="password" class="control-label">Password</label >
+		<div class="form-group">
+			<label for="password">Password</label>
 			<input type="password"
-			       class="form-control"
-			       ng-model="formModel.password"
-			       id="password"
-			       required="required"
-						 ng-minlength="10">
-		</div >
+				   class="form-control"
+				   id="password"
+				   name="password"
+				   ng-model="formModel.password"
+				   ng-minlength="10"
+				   required="required">
+		</div>
 
 		<div class="form-group">
 			<button class="btn btn-primary"
-							type="submit">Register
+					ladda="submitting"
+					data-style="expand-right"
+					type="submit">
+				Register{{ submitting ? 'ing...' : '' }}
 			</button>
+			<span ng-show="submitting">Please wait while your submission is processed...</span>
 		</div>
+	</form>
 
-	</form >
-
+	<p>The data:</p>
 	<pre>{{ formModel | json }}</pre>
+</div>
 
-</div >
+<script src="../libs/angular/angular.min.js"></script>
+<script src="../libs/angular-auto-validate/dist/jcs-auto-validate.min.js"></script>
+<script src="../libs/ladda/dist/spin.min.js"></script>
+<script src="../libs/ladda/dist/ladda.min.js"></script>
+<script src="../libs/angular-ladda/dist/angular-ladda.min.js"></script>
 
+<script src="main.js"></script>
 
-<script src="../libs/angular/angular.min.js" ></script >
-<script src="../libs/angular-auto-validate/dist/jcs-auto-validate.min.js" ></script >
-
-<script src="main.js" ></script >
-
-
-</body >
-</html >
+</body>
+</html>
