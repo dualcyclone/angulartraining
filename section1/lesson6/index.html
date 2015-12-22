@@ -1,114 +1,109 @@
-<!DOCTYPE html >
-<html lang="en" ng-app="minmax">
-<head >
-	<title >Form Validation - Part 2</title >
-	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
-	<link href="main.css" rel="stylesheet" >
-</head >
+<!DOCTYPE html>
+<html lang="en" ng-app="Registration">
+<head>
+	<title>Form Submission</title>
+	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="main.css" rel="stylesheet">
+</head>
 
-<body >
-<nav class="navbar navbar-inverse navbar-fixed-top" >
-	<div class="container" >
-		<div class="navbar-header" >
-			<a class="navbar-brand"
-			   href="/" >Form Validation - Part 2
-			</a >
-		</div >
-	</div >
-</nav >
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Form Submitting</a>
+		</div>
+	</div>
+</nav>
 
-<div class="container main-content" ng-controller="MinMaxCtrl">
-
-	<form ng-submit="onSubmit(theForm.$valid)"
-	      name="theForm"
-				novalidate="novalidate">
-		<div class="form-group" >
-			<label for="name" >Name</label >
-			<input type="text"
-			       class="form-control"
-			       ng-model="formModel.name"
-			       id="name" >
-		</div >
-
-		<div class="form-group" ng-class="
-			{
-			'has-error':!theForm.email.$valid && (!theForm.$pristine || theForm.$submitted),
-			'has-success':theForm.email.$valid && (!theForm.$pristine || theForm.$submitted)
-			}
-		">
-			<label for="email" class="control-label">Email</label >
-			<input type="email"
-			       class="form-control"
-			       ng-model="formModel.email"
-			       id="email"
-					   required="required"
-					   name="email">
-
-			<p class="help-block" ng-show="theForm.email.$error.required && (!theForm.$pristine || theForm.$submitted)">
-				This field is required
-			</p>
-			<p class="help-block" ng-show="theForm.email.$error.email && (!theForm.$pristine || theForm.$submitted)">
-				Please enter an email with at least an @ symbol
-			</p>
-
-			<!--<pre>Validation {{ theForm.email.$error | json }}</pre>-->
-			<!--<pre>Field Valid? {{ theForm.email.$valid }}</pre>-->
-			<!--<pre>Form Pristine? {{ theForm.$pristine }}</pre>-->
-			<!--<pre>Form Submitted? {{ theForm.$submitted }}</pre>-->
-
-		</div >
-
-		<div class="form-group" >
-			<label for="username" >Username</label >
-			<input type="text"
-			       class="form-control"
-			       ng-model="formModel.username"
-			       id="username" >
-		</div >
-
-		<div class="form-group" >
-			<label for="age" >Age</label >
-			<input type="number"
-			       class="form-control"
-			       ng-model="formModel.age"
-			       id="age" >
-		</div >
-
-		<div class="form-group" >
-			<label for="sex" >Sex</label >
-			<select id="sex"
-							class="form-control"
-							ng-model="formModel.sex" >
-				<option value="" >Please Choose</option >
-				<option value="male" >Male</option >
-				<option value="female" >Female</option >
-			</select >
-		</div >
-
-		<div class="form-group" >
-			<label for="password" >Password</label >
-			<input type="password"
-			       class="form-control"
-			       ng-model="formModel.password"
-			       id="password" >
-		</div >
-
+<div class="container main-content" ng-controller="RegistrationControl">
+	<form ng-submit="onSubmit()"
+		  novalidate="novalidate">
 		<div class="form-group">
-			<button class="btn btn-primary"
-							type="submit">Register
-			</button>
+			<label for="name">Name</label>
+			<input type="text"
+				   class="form-control"
+				   id="name"
+				   name="name"
+				   ng-model="formModel.name"
+				   required="required">
 		</div>
 
-	</form >
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="email"
+				   class="form-control"
+				   id="email"
+				   name="email"
+				   ng-model="formModel.email"
+				   required="required">
 
-	<pre>{{ theForm | json }}</pre>
+			<!--<pre>Validation: {{ registrationForm.email.$error | json }}</pre>-->
+			<!--<pre>Is this field valid? {{ registrationForm.email.$valid }}</pre>-->
+			<!--<pre>Is this field pristine? {{ registrationForm.email.$pristine }}</pre>-->
+			<!--<pre>Has the form been submitted? {{ registrationForm.$submitted }}</pre>-->
+		</div>
 
-</div >
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text"
+				   class="form-control"
+				   id="username"
+				   name="username"
+				   ng-model="formModel.username"
+				   ng-pattern="/^[A-Za-z0-9_]{7,15}$/"
+				   ng-pattern-err-type="badUsername"
+				   required="required">
+		</div>
 
+		<div class="form-group">
+			<label for="age">Age</label>
+			<input type="number"
+				   class="form-control"
+				   id="age"
+				   name="age"
+				   ng-model="formModel.age"
+				   min="18"
+				   max="99"
+				   ng-min-err-type="tooYoung"
+				   ng-max-err-type="tooYoung"
+				   required="required">
+		</div>
 
-<script src="../libs/angular/angular.min.js" ></script >
-<script src="main.js" ></script >
+		<div class="form-group">
+			<label for="gender">Gender</label>
+			<select name="gender"
+					id="gender"
+					class="form-control"
+					ng-model="formModel.gender">
+				<option value="">Please Choose</option>
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+		</div>
 
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password"
+				   class="form-control"
+				   id="password"
+				   name="password"
+				   ng-model="formModel.password"
+				   ng-minlength="10"
+				   required="required">
+		</div>
 
-</body >
-</html >
+		<div class="form-group">
+			<button class="btn btn-primary" type="submit">Register</button>
+		</div>
+	</form>
+
+	<p>The data:</p>
+	<pre>{{ formModel | json }}</pre>
+</div>
+
+<script src="../libs/angular/angular.min.js"></script>
+<script src="../libs/angular-auto-validate/dist/jcs-auto-validate.min.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
