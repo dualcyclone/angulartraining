@@ -1,18 +1,30 @@
-<!DOCTYPE html >
-<html lang="en" >
-<head >
-	<title >Data Binding</title >
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+	<title>Data Binding</title >
 	<link href="../libs/bootstrap/dist/css/bootstrap.min.css"
 	      rel="stylesheet" >
 	<link href="main.css"
 	      rel="stylesheet" >
-</head >
+</head>
 
-<body >
+<body>
 
-<div class="container" >
-</div >
+<div class="container" ng-init="title='Learning Angular';subtitle='I hate inline variable declaration';useful=true">
+	<h1>{{ title }}</h1>
+	<h2>{{ subtitle }}</h2>
+	<p>This course has been useful: {{ useful }}</p>
+
+	<label for="titlefield">Change the title:</label>
+	<input id="titlefield" type="text" class="form-control" ng-model="title"/>
+
+	<label for="subtitlefield">Change the subtitle:</label>
+	<input id="subtitlefield" type="text" class="form-control" ng-model="subtitle"/>
+
+	<label for="usefulcheck">Do you think this course has been useful?</label>
+	<input id="usefulcheck" type="checkbox" class="form-control" ng-model="useful"/>
+</div>
 
 <script src="../libs/angular/angular.min.js" ></script >
-</body >
-</html >
+</body>
+</html>
