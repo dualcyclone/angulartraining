@@ -1,92 +1,89 @@
-<!DOCTYPE html >
-<html lang="en" ng-app="minmax">
-<head >
-	<title >Form Submission</title >
-	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
-	<link href="main.css" rel="stylesheet" >
-</head >
+<!DOCTYPE html>
+<html lang="en" ng-app="Registration">
+<head>
+	<title>Form Submission</title>
+	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="main.css" rel="stylesheet">
+</head>
 
-<body >
-<nav class="navbar navbar-inverse navbar-fixed-top" >
-	<div class="container" >
-		<div class="navbar-header" >
-			<a class="navbar-brand"
-			   href="/" >Form Submitting
-			</a >
-		</div >
-	</div >
-</nav >
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Form Submitting</a>
+		</div>
+	</div>
+</nav>
 
-<div class="container main-content" ng-controller="MinMaxCtrl">
-
-	<form >
-		<div class="form-group" >
-			<label for="name" >Name</label >
-			<input type="text"
-			       class="form-control"
-			       ng-model="formModel.name"
-			       id="name" >
-		</div >
-
-		<div class="form-group" >
-			<label for="email" >Email</label >
-			<input type="email"
-			       class="form-control"
-			       ng-model="formModel.email"
-			       id="email" >
-		</div >
-
-		<div class="form-group" >
-			<label for="username" >Username</label >
-			<input type="text"
-			       class="form-control"
-			       ng-model="formModel.username"
-			       id="username" >
-		</div >
-
-		<div class="form-group" >
-			<label for="age" >Age</label >
-			<input type="number"
-			       class="form-control"
-			       ng-model="formModel.age"
-			       id="age" >
-		</div >
-
-		<div class="form-group" >
-			<label for="sex" >Sex</label >
-			<select name="sex"
-			        id="sex"
-							class="form-control"
-							ng-model="formModel.sex" >
-				<option value="" >Please Choose</option >
-				<option value="male" >Male</option >
-				<option value="female" >Female</option >
-			</select >
-		</div >
-
-		<div class="form-group" >
-			<label for="password" >Password</label >
-			<input type="password"
-			       class="form-control"
-			       ng-model="formModel.password"
-			       id="password" >
-		</div >
-
+<div class="container main-content" ng-controller="RegistrationControl">
+	<form ng-submit="onSubmit()">
 		<div class="form-group">
-			<button class="btn btn-primary" ng-click="onSubmit()">Register
-			</button>
+			<label for="name">Name</label>
+			<input type="text"
+				   class="form-control"
+				   id="name"
+				   ng-model="formModel.name"
+				   required="required">
 		</div>
 
-	</form >
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="email"
+				   class="form-control"
+				   id="email"
+				   ng-model="formModel.email"
+				   required="required">
+		</div>
 
-	<pre>{{ formModel | json }}</pre>
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text"
+				   class="form-control"
+				   id="username"
+				   ng-model="formModel.username"
+				   required="required">
+		</div>
 
-</div >
+		<div class="form-group">
+			<label for="age">Age</label>
+			<input type="number"
+				   class="form-control"
+				   id="age"
+				   ng-model="formModel.age">
+		</div>
 
+		<div class="form-group">
+			<label for="gender">Gender</label>
+			<select name="gender"
+					id="gender"
+					class="form-control"
+					ng-model="formModel.gender">
+				<option value="">Please Choose</option>
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+		</div>
 
-<script src="../libs/angular/angular.min.js" ></script >
-<script src="main.js" ></script >
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password"
+				   class="form-control"
+				   id="password"
+				   ng-model="formModel.password"
+				   required="required">
+		</div>
 
+		<div class="form-group">
+			<button class="btn btn-primary" type="submit">Register</button>
+		</div>
+	</form>
 
-</body >
-</html >
+	<p>The data:</p>
+	<pre>{{ formModel | json}}</pre> <!-- the formModel filtered to view as JSON (this one is a built in filter) -->
+</div>
+
+<script src="../libs/angular/angular.min.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
