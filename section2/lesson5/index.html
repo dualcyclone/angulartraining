@@ -1,106 +1,134 @@
-<!DOCTYPE html >
-<html lang="en" ng-app="codecraft" >
-<head >
-	<title >Lists Of Things</title >
-	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
-	<link href="main.css" rel="stylesheet" >
-</head >
+<!DOCTYPE html>
+<html lang="en" ng-app="codecraft">
+<head>
+	<title>Lists Of Things</title>
+	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="main.css" rel="stylesheet">
+</head>
 
-<body >
-<nav class="navbar navbar-inverse navbar-fixed-top" >
-	<div class="container" >
-		<div class="navbar-header" >
-			<a class="navbar-brand"
-			   href="/" >Lists Of Things
-			</a >
-		</div >
-	</div >
-</nav >
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Lists Of Things</a>
+		</div>
+	</div>
+</nav>
 
-<div class="container main-content" ng-controller="PersonsController" >
+<div class="container main-content" ng-controller="PersonController">
 
-	<div class="row" >
-		<div class="col-md-12" >
-			<form class="form-inline well well-sm" >
-				<span class="glyphicon glyphicon-search" ></span >
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline well well-sm">
+				<span class="glyphicon glyphicon-search"></span>
 
-				<div class="form-group" >
-						<input type="text"
-						       class="form-control"
-						       id="name"
-						       ng-model="search"
-						       placeholder="Search name..."
-								/>
-				</div >
+				<fieldset class="form-group">
+					<input type="text"
+						   class="form-control"
+						   id="name"
+						   placeholder="Search by anything..."
+						   ng-model="search"/>
+				</fieldset>
 
-			</form >
-		</div >
-	</div >
+				<span class="glyphicon glyphicon-sort-by-attributes"></span>
+
+				<fieldset class="form-group">
+					<select class="form-control"
+							ng-model="sorting">
+						<option value="">Select order</option>
+						<option value="name">Name (ASC)</option>
+						<option value="-name">Name (DES)</option>
+						<option value="email">Email (ASC)</option>
+						<option value="-email">Email (DES)</option>
+						<option value="birthdate">Birthday (ASC)</option>
+						<option value="-birthdate">Birthday (DES)</option>
+					</select>
+				</fieldset>
+			</form>
+
+			<pre>Model search object: {{ search | json }}</pre>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-{{ selectedPersonExists() ? 8 : 12 }}">
+			<table class="table table-bordered">
+				<tr>
+					<th>#</th>
+					<th>
+						<span>Name</span>
+						<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('name')"></span>
+						<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-name')"></span>
+					</th>
+					<th>
+						<span>Email</span>
+						<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('email')"></span>
+						<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-email')"></span>
+					</th>
+					<th>
+						<span>Birthday</span>
+						<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('birthdate')"></span>
+						<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-birthdate')"></span>
+					</th>
+				</tr>
+
+				<!--
+					Adding track by ensures that Angular will not arbitrarily rebuild all of the DOM nodes unnecessarily.
+					If the object still exists on screen, the DOM node for that object will remain intact, unless it is
+					filtered from the dataset.
+
+					Ideally you'd use a unique identifier from the object itself, but since this tutorial does not have
+					that in the dataset, I am using $index (which is dynamic) - this means that the node at the index will
+					remain on screen, but the data within it will change, so if I filter down to three items, the first three
+					DOM nodes will remain, and the data will change within them. Had there been a unique object reference,
+					then the node for that specific object would remain
+				-->
+				<tr ng-repeat="person in persons | filter:sensitiveSearch | orderBy:sorting track by $index"
+					ng-style="{
+						'background-color': person === selectedPerson ? '#eaeaea' : ''
+					}"
+					ng-click="selectPerson()">
+					<td>{{ $index }}</td>
+					<td>{{ person.name }}</td>
+					<td>{{ person.email }}</td>
+					<td>{{ person.birthdate | date:"longDate" }}</td> <!-- Angular filter for dates, with a custom format -->
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-4"
+			 ng-style="{
+				'visibility': selectedPersonExists() ? 'initial' : 'hidden'
+			}">
+			<div class="panel panel-default">
+				<div class="panel-heading">Selected Person Details</div>
+				<div class="panel-body">
+					<dl>
+						<dt>Name</dt>
+						<dd>{{ selectedPerson.name }}</dd>
+						<dt>Email</dt>
+						<dd>{{ selectedPerson.email }}</dd>
+						<dt>Birthday</dt>
+						<dd>{{ selectedPerson.birthdate | date:"longDate" }}</dd>
+						<dt>Phonenumber</dt>
+						<dd>{{ selectedPerson.phonenumber }}</dd>
+						<dt>Address</dt>
+						<dd>{{ selectedPerson.address }}</dd>
+						<dt>City</dt>
+						<dd>{{ selectedPerson.city }}</dd>
+						<dt>Country</dt>
+						<dd>{{ selectedPerson.country }}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-	<div class="row" >
-		<div class="col-md-8" >
 
-			<table class="table table-bordered" >
-
-				<tr >
-					<th >#</th >
-					<th >Name</th >
-					<th >Email</th >
-					<th >Birthday</th >
-				</tr >
-
-				<tr ng-repeat="person in persons | filter:sensitiveSearch"
-				    ng-style="{
-				 'background-color': $index == selectedIndex ? 'lightgray' : ''
-				 }"
-				    ng-click="selectPerson(person, $index)" >
-					<td >{{ $index }}</td >
-					<td >{{ person.name }}</td >
-					<td >{{ person.email }}</td >
-					<td >{{ person.birthdate | date:"longDate" }}</td >
-				</tr >
+</div>
 
 
-			</table >
-
-		</div >
-		<div class="col-md-4" >
-
-			<div class="panel panel-default" >
-				<div class="panel-heading" >Details</div >
-				<div class="panel-body" >
-
-					<dl >
-						<dt >Name</dt >
-						<dd >{{selectedPerson.name}}</dd >
-						<dt >Email</dt >
-						<dd >{{selectedPerson.email}}</dd >
-						<dt >Birthday</dt >
-						<dd >{{selectedPerson.birthdate | date:"longDate"}}</dd >
-						<dt >Phonenumber</dt >
-						<dd >{{selectedPerson.phonenumber}}</dd >
-						<dt >Address</dt >
-						<dd >{{selectedPerson.address}}</dd >
-						<dt >City</dt >
-						<dd >{{selectedPerson.city}}</dd >
-						<dt >Country</dt >
-						<dd >{{selectedPerson.country}}</dd >
-					</dl >
-
-				</div >
-			</div >
-
-			<pre>{{ search }}</pre>
-
-		</div >
-	</div >
-
-
-</div >
-
-
-<script src="../libs/angular/angular.min.js" ></script >
-<script src="main.js" ></script >
-</body >
-</html >
+<script src="../libs/angular/angular.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
