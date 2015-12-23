@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <!-- Lesson 1: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504786 -->
 <!-- Lesson 2: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504787 -->
+<!-- Lesson 4: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504789 -->
+<!-- Lesson 5: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504790 -->
 <html lang="en" ng-app="codecraft">
 <head>
 	<title>Contacts</title>
@@ -70,9 +72,9 @@
 						</tr>
 						<tr ng-repeat="person in filteredPersons = filterPersons() track by $index"
 							ng-style="{
-						'background-color': person === selectedPerson ? '#eaeaea' : ''
-					}"
-							ng-click="selectPerson()">
+								'background-color': person === contacts.selectedPerson ? '#eaeaea' : ''
+							}"
+							ng-click="contacts.selectPerson(person)">
 							<td>{{ $index }}</td>
 							<td>{{ person.name }}</td>
 							<td>{{ person.email }}</td>
@@ -98,19 +100,19 @@
 				<div class="panel-body">
 					<dl>
 						<dt>Name</dt>
-						<dd>{{ selectedPerson.name }}</dd>
+						<dd>{{ contacts.selectedPerson.name }}</dd>
 						<dt>Email</dt>
-						<dd>{{ selectedPerson.email }}</dd>
+						<dd>{{ contacts.selectedPerson.email }}</dd>
 						<dt>Birthday</dt>
-						<dd>{{ selectedPerson.birthdate | date:"longDate" }}</dd>
+						<dd>{{ contacts.selectedPerson.birthdate | date:"longDate" }}</dd>
 						<dt>Phonenumber</dt>
-						<dd>{{ selectedPerson.phonenumber }}</dd>
+						<dd>{{ contacts.selectedPerson.phonenumber }}</dd>
 						<dt>Address</dt>
-						<dd>{{ selectedPerson.address }}</dd>
+						<dd>{{ contacts.selectedPerson.address }}</dd>
 						<dt>City</dt>
-						<dd>{{ selectedPerson.city }}</dd>
+						<dd>{{ contacts.selectedPerson.city }}</dd>
 						<dt>Country</dt>
-						<dd>{{ selectedPerson.country }}</dd>
+						<dd>{{ contacts.selectedPerson.country }}</dd>
 					</dl>
 				</div>
 			</div>
