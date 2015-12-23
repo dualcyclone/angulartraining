@@ -28,7 +28,7 @@
 						   class="form-control"
 						   id="name"
 						   placeholder="Search by anything..."
-						   ng-model="search.$"/>
+						   ng-model="search"/>
 				</fieldset>
 			</form>
 
@@ -37,7 +37,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-{{ selectedPerson !== null ? 8 : 12 }}">
+		<div class="col-md-{{ selectedPersonExists() ? 8 : 12 }}">
 			<table class="table table-bordered">
 				<tr>
 					<th>#</th>
@@ -46,9 +46,20 @@
 					<th>Birthday</th>
 				</tr>
 
-				<tr ng-repeat="person in persons | filter:search"
+				<!--
+					Adding track by ensures that Angular will not arbitrarily rebuild all of the DOM nodes unnecessarily.
+					If the object still exists on screen, the DOM node for that object will remain intact, unless it is
+					filtered from the dataset.
+
+					Ideally you'd use a unique identifier from the object itself, but since this tutorial does not have
+					that in the dataset, I am using $index (which is dynamic) - this means that the node at the index will
+					remain on screen, but the data within it will change, so if I filter down to three items, the first three
+					DOM nodes will remain, and the data will change within them. Had there been a unique object reference,
+					then the node for that specific object would remain
+				-->
+				<tr ng-repeat="person in persons | filter:sensitiveSearch track by $index"
 					ng-style="{
-						'background-color': $index === selectedIndex ? '#eaeaea' : ''
+						'background-color': person === selectedPerson ? '#eaeaea' : ''
 					}"
 					ng-click="selectPerson()">
 					<td>{{ $index }}</td>
@@ -60,7 +71,7 @@
 		</div>
 		<div class="col-md-4"
 			 ng-style="{
-				'visibility': selectedPerson !== null ? 'initial' : 'hidden'
+				'visibility': selectedPersonExists() ? 'initial' : 'hidden'
 			}">
 			<div class="panel panel-default">
 				<div class="panel-heading">Selected Person Details</div>
