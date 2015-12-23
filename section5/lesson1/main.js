@@ -10,27 +10,27 @@ app.filter('sensitiveSearch', function() {
 	};
 });
 
-app.controller('PersonListController', function($scope, $http, $filter) {
+app.controller('PersonListController', function($scope, $rootScope, $http, $filter) {
 	$http.get('persons.json')
 		.then(function(res){
 			$scope.persons = res.data;
 		});
 
 	$scope.search = ''; // initialise the search value
-	$scope.selectedPerson = null; // initialise the selected person data of the row (currently none selected)
+	$rootScope.selectedPerson = null; // initialise the selected person data of the row (currently none selected)
 	$scope.sorting = ''; // initialise as no predefined order - this will also map to the "Select order" option in the form
 
 	$scope.selectPerson = function() {
 		var selectedPerson = this.person,
-			isSameAsSelected = ($scope.selectedPerson !== selectedPerson);
+			isSameAsSelected = ($rootScope.selectedPerson !== selectedPerson);
 
 		// If the selected person is the same as the one already selected, de-select it, otherwise persist the person data
-		$scope.selectedPerson = isSameAsSelected ? selectedPerson : null;
+		$rootScope.selectedPerson = isSameAsSelected ? selectedPerson : null;
 	};
 
 	// helper to find if the selected person exists in the filtered subset
 	$scope.selectedPersonExists = function() {
-		return $scope.filteredPersons.indexOf($scope.selectedPerson) > -1;
+		return $scope.filteredPersons.indexOf($rootScope.selectedPerson) > -1;
 	};
 
 	$scope.sortBy = function(sorting) {
@@ -42,8 +42,8 @@ app.controller('PersonListController', function($scope, $http, $filter) {
 		var filtered = $scope.persons ? $filter('sensitiveSearch')($filter('orderBy')($scope.persons, $scope.sorting), $scope.search) : []; // $scope.persons is undefined on initial load... http get to slow?
 
 		// If the selected person no longer exists within the filtered persons subset, reset the selected person
-		if (filtered.indexOf($scope.selectedPerson) === -1) {
-			$scope.selectedPerson = null;
+		if (filtered.indexOf($rootScope.selectedPerson) === -1) {
+			$rootScope.selectedPerson = null;
 		}
 
 		return filtered;
