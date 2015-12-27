@@ -42,6 +42,7 @@ app.service('ContactService', function(Contact) {
         'hasMore': true,
         'isLoading': false,
         'isUpdating': false,
+        'isDeleting': false,
         'search': '',
         'soerting': '',
         'doSearch': function(search) {
@@ -93,6 +94,18 @@ app.service('ContactService', function(Contact) {
                 self.isUpdating = false;
             });
         },
+        'deleteContact': function(person) {
+            self.isDeleting = true;
+            person.$remove().then(function() {
+                self.isDeleting = false;
+
+                var i = self.persons.indexOf(person);
+
+                self.persons.splice(i, 1);
+
+                self.selectedPerson = null;
+            });
+        },
         'persons': []
     };
 
@@ -138,5 +151,9 @@ app.controller('PersonDetailController', function($scope, ContactService) {
 
     $scope.save = function() {
         $scope.contacts.updateContact($scope.contacts.selectedPerson);
+    };
+
+    $scope.delete = function() {
+        $scope.contacts.deleteContact($scope.contacts.selectedPerson);
     };
 });

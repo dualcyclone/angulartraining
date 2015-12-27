@@ -11,6 +11,7 @@
 <!-- Lesson 10: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504801 -->
 <!-- Lesson 11: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504802 -->
 <!-- Lesson 12: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504803 -->
+<!-- Lesson 13: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504804 -->
 <html lang="en" ng-app="codecraft">
 <head>
 	<title>Contacts</title>
@@ -108,7 +109,12 @@
 		</div>
 		<div class="col-md-4" ng-controller="PersonDetailController">
 			<div class="panel panel-default">
-				<div class="panel-heading">Selected Person Details</div>
+				<div class="panel-heading">
+					<span>Details</span>
+
+					<button class="btn btn-danger btn-sm pull-right" ladda="contacts.isDeleting" ng-click="delete()">Delete</button>
+					<div class="clearfix"></div>
+				</div>
 				<div class="panel-body">
 					<form class="form-horizontal" ng-submit="save()" novalidate>
 						<div class="form-group">
