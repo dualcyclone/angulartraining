@@ -26,7 +26,7 @@ app.factory('Contact', function($resource) {
     });
 });
 
-app.service('ContactService', function(Contact) {
+app.service('ContactService', function(Contact, $q) {
 	var self = {
         'addPerson': function (person) {
             this.persons.push(person);
@@ -108,10 +108,20 @@ app.service('ContactService', function(Contact) {
             });
         },
         'createContact': function(person) {
+            var deferred = $q.defer();
+
             self.isUpdating = true;
             Contact.save(person).$promise.then(function() {
                 self.isUpdating = false;
+                self.selectedPerson = null;
+                self.hasMore = true;
+                self.page = 1;
+                self.persons = [];
+                self.loadContacts();
+                deferred.resolve();
             });
+
+            return deferred.promise;
         },
         'persons': []
     };
@@ -162,7 +172,9 @@ app.controller('PersonListController', function($scope, $filter, ContactService,
     };
 
     $scope.createContact = function() {
-        $scope.contacts.createContact($scope.contacts.selectedPerson);
+        $scope.contacts.createContact($scope.contacts.selectedPerson).then(function() {
+            $scope.createModal.hide();
+        });
     };
 });
 
