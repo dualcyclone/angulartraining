@@ -2,6 +2,7 @@
 <!-- Lesson 1: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504792 -->
 <!-- Lesson 2: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504793 -->
 <!-- Lesson 3: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504794 -->
+<!-- Lesson 4: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504795 -->
 <html lang="en" ng-app="codecraft">
 <head>
 	<title>Contacts</title>
@@ -50,7 +51,7 @@
 						</fieldset>
 					</form>
 
-					<table class="table table-bordered">
+					<table class="table table-bordered" infinite-scroll="loadMore()" infinite-scroll-distance="1">
 						<tr>
 							<th>#</th>
 							<th>
@@ -121,6 +122,7 @@
 
 <script src="../libs/angular/angular.min.js"></script>
 <script src="../libs/angular-resource/angular-resource.min.js"></script>
+<script src="../libs/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
