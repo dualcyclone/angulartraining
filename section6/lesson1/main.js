@@ -1,16 +1,28 @@
 var app = angular.module('codecraft', [
 	'ngResource',
     'infinite-scroll',
-    'angularSpinner'
+    'angularSpinner',
+    'jcs-autoValidate',
+    'angular-ladda'
 ]);
 
-app.config(function($httpProvider, $resourceProvider) {
+app.config(function($httpProvider, $resourceProvider, laddaProvider) {
 	$httpProvider.defaults.headers.common['Authorization'] = 'Token da4eb42da465bc8d3334f33b4d16fd68d4882885';
 	$resourceProvider.defaults.stripTrailingSlashes = false;
+
+    laddaProvider.setOption({
+        style: 'expand-right'
+    })
 });
 
 app.factory('Contact', function($resource) {
-    return $resource('https://codecraftpro.com/api/samples/v1/contact/:id/');
+    return $resource('https://codecraftpro.com/api/samples/v1/contact/:id/', {
+        id:'@id'
+    }, {
+        update: {
+            method: 'PUT'
+        }
+    });
 });
 
 app.service('ContactService', function(Contact) {
@@ -21,14 +33,15 @@ app.service('ContactService', function(Contact) {
         'selectedPerson': null,
         'selectPerson': function(person) {
             var selectedPerson = person,
-                isSameAsSelected = (service.selectedPerson !== selectedPerson);
+                isSameAsSelected = (self.selectedPerson !== selectedPerson);
 
             // If the selected person is the same as the one already selected, de-select it, otherwise persist the person data
-            service.selectedPerson = isSameAsSelected ? selectedPerson : null;
+            self.selectedPerson = isSameAsSelected ? selectedPerson : null;
         },
         'page': 1,
         'hasMore': true,
         'isLoading': false,
+        'isUpdating': false,
         'search': '',
         'soerting': '',
         'doSearch': function(search) {
@@ -74,6 +87,12 @@ app.service('ContactService', function(Contact) {
                 self.loadContacts();
             }
         },
+        'updateContact': function(person) {
+            self.isUpdating = true;
+            person.$update().then(function() {
+                self.isUpdating = false;
+            });
+        },
         'persons': []
     };
 
@@ -116,4 +135,8 @@ app.controller('PersonListController', function($scope, $filter, ContactService)
 
 app.controller('PersonDetailController', function($scope, ContactService) {
 	$scope.contacts = ContactService;
+
+    $scope.save = function() {
+        $scope.contacts.updateContact($scope.contacts.selectedPerson);
+    };
 });
