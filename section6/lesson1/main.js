@@ -107,6 +107,12 @@ app.service('ContactService', function(Contact) {
                 self.selectedPerson = null;
             });
         },
+        'createContact': function(person) {
+            self.isUpdating = true;
+            Contact.save(person).$promise.then(function() {
+                self.isUpdating = false;
+            });
+        },
         'persons': []
     };
 
@@ -147,11 +153,16 @@ app.controller('PersonListController', function($scope, $filter, ContactService,
     });
 
     $scope.showCreateModal = function() {
+        $scope.contacts.selectedPerson = null;
         $scope.createModal = $modal({
             scope: $scope,
             template: 'templates/modal.create.tpl.html',
             show: true
         });
+    };
+
+    $scope.createContact = function() {
+        $scope.contacts.createContact($scope.contacts.selectedPerson);
     };
 });
 
