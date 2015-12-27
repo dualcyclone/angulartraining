@@ -8,6 +8,7 @@
 <!-- Lesson 7: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504798 -->
 <!-- Lesson 8: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504799 -->
 <!-- Lesson 9: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504800 -->
+<!-- Lesson 10: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504801 -->
 <html lang="en" ng-app="codecraft">
 <head>
 	<title>Contacts</title>
@@ -85,17 +86,15 @@
 							<td>{{ person.email }}</td>
 							<td>{{ person.birthdate | date:"longDate" }}</td> <!-- Angular filter for dates, with a custom format -->
 						</tr>
-
-						<tr ng-show="contact.persons.length === 0">
-							<td colspan="4">
-								<div class="alert alert-info">
-									<p class="text-center">
-										No results found for search: "{{ search }}"
-									</p>
-								</div>
-							</td>
-						</tr>
 					</table>
+
+					<div ng-show="contacts.persons.length === 0 && !contacts.isLoading">
+						<div class="alert alert-info">
+							<p class="text-center">
+								No results found for search: "{{ search }}"
+							</p>
+						</div>
+					</div>
 
 					<div class="spinner" ng-show="contacts.isLoading">
 						<span us-spinner="{radius:8, width:5, length:3, lines:9}"></span>
