@@ -3,7 +3,8 @@ var app = angular.module('codecraft', [
     'infinite-scroll',
     'angularSpinner',
     'jcs-autoValidate',
-    'angular-ladda'
+    'angular-ladda',
+    'mgcrea.ngStrap'
 ]);
 
 app.config(function($httpProvider, $resourceProvider, laddaProvider) {
@@ -114,7 +115,7 @@ app.service('ContactService', function(Contact) {
 	return self;
 });
 
-app.controller('PersonListController', function($scope, $filter, ContactService) {
+app.controller('PersonListController', function($scope, $filter, ContactService, $modal) {
 	$scope.search = ''; // initialise the search value
 	$scope.sorting = ''; // initialise as no predefined order - this will also map to the "Select order" option in the form
 	$scope.contacts = ContactService;
@@ -144,6 +145,14 @@ app.controller('PersonListController', function($scope, $filter, ContactService)
             $scope.contacts.doSorting(value);
         }
     });
+
+    $scope.showCreateModal = function() {
+        $scope.createModal = $modal({
+            scope: $scope,
+            template: 'templates/modal.create.tpl.html',
+            show: true
+        });
+    };
 });
 
 app.controller('PersonDetailController', function($scope, ContactService) {
