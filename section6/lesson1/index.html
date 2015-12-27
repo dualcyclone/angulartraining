@@ -3,6 +3,10 @@
 <!-- Lesson 2: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504793 -->
 <!-- Lesson 3: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504794 -->
 <!-- Lesson 4: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504795 -->
+<!-- Lesson 5: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504796 -->
+<!-- Lesson 6: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504797 -->
+<!-- Lesson 7: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504798 -->
+<!-- Lesson 8: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504799 -->
 <html lang="en" ng-app="codecraft">
 <head>
 	<title>Contacts</title>
@@ -70,7 +74,7 @@
 								<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-birthdate')"></span>
 							</th>
 						</tr>
-						<tr ng-repeat="person in filteredPersons = filterPersons() track by $index"
+						<tr ng-repeat="person in contacts.persons track by $index"
 							ng-style="{
 								'background-color': person === contacts.selectedPerson ? '#eaeaea' : ''
 							}"
@@ -81,7 +85,7 @@
 							<td>{{ person.birthdate | date:"longDate" }}</td> <!-- Angular filter for dates, with a custom format -->
 						</tr>
 
-						<tr ng-show="filteredPersons.length === 0">
+						<tr ng-show="contact.persons.length === 0">
 							<td colspan="4">
 								<div class="alert alert-info">
 									<p class="text-center">

@@ -28,12 +28,30 @@ app.service('ContactService', function(Contact) {
         'page': 1,
         'hasMore': true,
         'isLoading': false,
+        'search': '',
+        'soerting': '',
+        'doSearch': function(search) {
+            self.hasMore = true;
+            self.page = 1;
+            self.persons = [];
+            self.search = search;
+            self.loadContacts();
+        },
+        'doSorting': function(sorting) {
+            self.hasMore = true;
+            self.page = 1;
+            self.persons = [];
+            self.sorting = sorting;
+            self.loadContacts();
+        },
         'loadContacts': function() {
             if (self.hasMore && !self.isLoading) {
                 self.isLoading = true;
 
                 var params = {
-                    'page': self.page
+                    'page': self.page,
+                    'search': self.search,
+                    'ordering': self.sorting
                 }
 
                 Contact.get(params, function(data) {
@@ -63,16 +81,6 @@ app.service('ContactService', function(Contact) {
 	return self;
 });
 
-// Proper custom filter for searching
-app.filter('sensitiveSearch', function() {
-	return function(persons, search) {
-		return persons.filter(function(person) {
-			// If there is a query, perform the real filter; otherwise always return true to prevent any filtering of each person
-			return (search !== '' ? (person.name.indexOf(search) === 0 || person.email.indexOf(search) === 0) : true);
-		});
-	};
-});
-
 app.controller('PersonListController', function($scope, $filter, ContactService) {
 	$scope.search = ''; // initialise the search value
 	$scope.sorting = ''; // initialise as no predefined order - this will also map to the "Select order" option in the form
@@ -88,20 +96,21 @@ app.controller('PersonListController', function($scope, $filter, ContactService)
 		$scope.sorting = ($scope.sorting === sorting ? '' : sorting);
 	};
 
-	$scope.filterPersons = function() {
-		var filtered = $filter('sensitiveSearch')($filter('orderBy')($scope.contacts.persons, $scope.sorting), $scope.search); // $scope.persons is undefined on initial load... http get to slow?
-
-		// If the selected person no longer exists within the filtered persons subset, reset the selected person
-		if (filtered.indexOf($scope.contacts.selectedPerson) === -1) {
-			$scope.contacts.selectedPerson = null;
-		}
-
-		return filtered;
-	};
-
     $scope.loadMore = function() {
         $scope.contacts.loadMore();
     };
+
+    $scope.$watch('search', function(value, oldValue) {
+        if (angular.isDefined(value) && (value !== oldValue)) {
+            $scope.contacts.doSearch(value);
+        }
+    });
+
+    $scope.$watch('sorting', function(value, oldValue) {
+        if (angular.isDefined(value) && (value !== oldValue)) {
+            $scope.contacts.doSorting(value);
+        }
+    });
 });
 
 app.controller('PersonDetailController', function($scope, ContactService) {
