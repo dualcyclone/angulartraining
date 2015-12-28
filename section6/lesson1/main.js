@@ -4,7 +4,9 @@ var app = angular.module('codecraft', [
     'angularSpinner',
     'jcs-autoValidate',
     'angular-ladda',
-    'mgcrea.ngStrap'
+    'mgcrea.ngStrap',
+    'toaster',
+    'ngAnimate'
 ]);
 
 app.config(function($httpProvider, $resourceProvider, laddaProvider, $datepickerProvider) {
@@ -31,7 +33,7 @@ app.factory('Contact', function($resource) {
     });
 });
 
-app.service('ContactService', function(Contact, $q) {
+app.service('ContactService', function(Contact, $q, toaster) {
 	var self = {
         'addPerson': function (person) {
             this.persons.push(person);
@@ -98,6 +100,7 @@ app.service('ContactService', function(Contact, $q) {
             self.isUpdating = true;
             person.$update().then(function() {
                 self.isUpdating = false;
+                toaster.pop('success', 'Updated ' + person.name);
             });
         },
         'deleteContact': function(person) {
@@ -110,6 +113,8 @@ app.service('ContactService', function(Contact, $q) {
                 self.persons.splice(i, 1);
 
                 self.selectedPerson = null;
+
+                toaster.pop('success', 'Deleted ' + person.name);
             });
         },
         'createContact': function(person) {
@@ -123,6 +128,9 @@ app.service('ContactService', function(Contact, $q) {
                 self.page = 1;
                 self.persons = [];
                 self.loadContacts();
+
+                toaster.pop('success', 'Created ' + person.name);
+
                 deferred.resolve();
             });
 
