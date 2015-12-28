@@ -33,6 +33,13 @@ app.factory('Contact', function($resource) {
     });
 });
 
+app.filter('defaultImage', function() {
+    return function(input, param) {
+        // if no input, return the provided default
+        return input || param;
+    };
+});
+
 app.service('ContactService', function(Contact, $q, toaster) {
 	var self = {
         'addPerson': function (person) {

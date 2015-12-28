@@ -108,7 +108,7 @@
 							ng-click="contacts.selectPerson(person)">
 							<td>
 								<!-- use ng-src so angular prevents the browser from loading the actual text before angular has evaluated it and set the src attribute itself -->
-								<img ng-src="{{ person.photo }}" class="img-circle profile-photo" alt="photo of {{ person.name }}" />
+								<img ng-src="{{ person.photo | defaultImage:'./avatar.png' }}" class="img-circle profile-photo" alt="photo of {{ person.name }}" />
 							</td>
 							<td>{{ person.name }}</td>
 							<td>{{ person.email }}</td>
