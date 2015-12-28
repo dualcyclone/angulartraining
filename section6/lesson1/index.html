@@ -16,6 +16,7 @@
 <!-- Lesson 15: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504806 -->
 <!-- Lesson 16: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504807 -->
 <!-- Lesson 17: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504808 -->
+<!-- Lesson 18: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504809 -->
 <html lang="en" ng-app="codecraft">
 <head>
 	<title>Contacts</title>
@@ -59,8 +60,8 @@
 								<option value="-name">Name (DES)</option>
 								<option value="email">Email (ASC)</option>
 								<option value="-email">Email (DES)</option>
-								<option value="birthdate">Birthday (ASC)</option>
-								<option value="-birthdate">Birthday (DES)</option>
+								<option value="phonenumber">Phonenumber (ASC)</option>
+								<option value="-phonenumber">Phonenumber (DES)</option>
 							</select>
 						</fieldset>
 
@@ -69,7 +70,7 @@
 
 					<table class="table table-bordered" infinite-scroll="loadMore()" infinite-scroll-distance="1">
 						<tr>
-							<th>#</th>
+							<th>Photo</th>
 							<th>
 								<span>Name</span>
 								<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('name')"></span>
@@ -81,9 +82,9 @@
 								<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-email')"></span>
 							</th>
 							<th>
-								<span>Birthday</span>
-								<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('birthdate')"></span>
-								<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-birthdate')"></span>
+								<span>Phonenumber</span>
+								<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('phonenumber')"></span>
+								<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-phonenumber')"></span>
 							</th>
 						</tr>
 						<tr ng-repeat="person in contacts.persons track by $index"
@@ -91,10 +92,13 @@
 								'background-color': person === contacts.selectedPerson ? '#eaeaea' : ''
 							}"
 							ng-click="contacts.selectPerson(person)">
-							<td>{{ $index }}</td>
+							<td>
+								<!-- use ng-src so angular prevents the browser from loading the actual text before angular has evaluated it and set the src attribute itself -->
+								<img ng-src="{{ person.photo }}" class="img-circle profile-photo" alt="photo of {{ person.name }}" />
+							</td>
 							<td>{{ person.name }}</td>
 							<td>{{ person.email }}</td>
-							<td>{{ person.birthdate | date:"longDate" }}</td> <!-- Angular filter for dates, with a custom format -->
+							<td>{{ person.phonenumber }}</td>
 						</tr>
 					</table>
 
