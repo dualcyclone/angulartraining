@@ -17,9 +17,19 @@ body {
   margin-top: 20px;
 }
 
-table tr td {
-  vertical-align: middle;
-}
+.table tr th:nth-of-type(1) {
+  width: 10%; }
+.table tr th:nth-of-type(2) {
+  width: 30%; }
+.table tr th:nth-of-type(3) {
+  width: 30%; }
+.table tr th:nth-of-type(4) {
+  width: 30%; }
+.table tr td {
+  vertical-align: middle; }
+.table tr td .profile-photo {
+  width: 30px;
+  height: 30px; }
 
 .profile-photo {
   width: 30px;
@@ -37,3 +47,21 @@ table tr td {
   opacity: .5; }
 .modal-backdrop.am-fade.ng-leave.ng-leave-active {
   opacity: 0; }
+
+.sortables {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle; }
+.sortables span:first-child {
+  position: absolute;
+  top: 0; }
+.sortables span:last-child {
+  position: absolute;
+  bottom: 0; }
+.sortables span {
+  color: lightgray;
+  font-size: 18px; }
+.sortables span:hover {
+  color: #002a80; }

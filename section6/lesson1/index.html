@@ -19,6 +19,7 @@
 <!-- Lesson 18: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504809 -->
 <!-- Lesson 19: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504810 -->
 <!-- Lesson 20: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504811 -->
+<!-- Lesson 21: https://stackskills.com/courses/angularjs-from-zero-to-hero/lectures/504812 -->
 <html lang="en" ng-app="codecraft">
 <head>
 	<title>Contacts</title>
@@ -26,6 +27,7 @@
 	<link href="../libs/bootstrap-additions/dist/bootstrap-additions.min.css" rel="stylesheet">
 	<link href="../libs/ladda/dist/ladda-themeless.min.css" rel="stylesheet">
 	<link href="../libs/angularjs-toaster/toaster.min.css" rel="stylesheet">
+	<link href="../libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" >
 	<link href="main.css" rel="stylesheet">
 </head>
 
@@ -44,7 +46,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<form class="form-inline well well-sm">
-						<span class="glyphicon glyphicon-search"></span>
+						<span class="fa fa-search"></span>
 
 						<fieldset class="form-group">
 							<input type="text"
@@ -54,7 +56,7 @@
 								   ng-model="search"/>
 						</fieldset>
 
-						<span class="glyphicon glyphicon-sort-by-attributes"></span>
+						<span class="fa fa-sort"></span>
 
 						<fieldset class="form-group">
 							<select class="form-control"
@@ -76,19 +78,25 @@
 						<tr>
 							<th>Photo</th>
 							<th>
+								<div class="sortables">
+									<span class="fa fa-sort-asc" ng-click="sortBy('name')"></span>
+									<span class="fa fa-sort-desc" ng-click="sortBy('-name')"></span>
+								</div>
 								<span>Name</span>
-								<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('name')"></span>
-								<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-name')"></span>
 							</th>
 							<th>
+								<div class="sortables">
+									<span class="fa fa-sort-asc" ng-click="sortBy('email')"></span>
+									<span class="fa fa-sort-desc" ng-click="sortBy('-email')"></span>
+								</div>
 								<span>Email</span>
-								<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('email')"></span>
-								<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-email')"></span>
 							</th>
 							<th>
+								<div class="sortables">
+									<span class="fa fa-sort-asc" ng-click="sortBy('phonenumber')"></span>
+									<span class="fa fa-sort-desc" ng-click="sortBy('-phonenumber')"></span>
+								</div>
 								<span>Phonenumber</span>
-								<span class="glyphicon glyphicon-menu-up" ng-click="sortBy('phonenumber')"></span>
-								<span class="glyphicon glyphicon-menu-down" ng-click="sortBy('-phonenumber')"></span>
 							</th>
 						</tr>
 						<tr ng-repeat="person in contacts.persons track by $index"
