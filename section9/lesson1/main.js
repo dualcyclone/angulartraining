@@ -83,7 +83,9 @@ app.directive('ccSpinner', function() {
             A, E, C, AE (default anyway), CE, AC, AEC, etc...
          */
         'restrict': 'E',
-        templateUrl: 'templates/spinner.html'
+        templateUrl: 'templates/spinner.html',
+        // transclude will load in the inner HTML from the directive include in the HTML to the directive template if ng-transclude is added to the template
+        'transclude': true
     };
 });
 
