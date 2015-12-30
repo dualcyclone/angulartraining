@@ -47,8 +47,6 @@
         </div>
     </div>
 
-    <div class="spinner" ng-show="contacts.isLoading">
-        <span us-spinner="{radius:8, width:5, length:3, lines:9}"></span>
-        <p>Loading...</p>
-    </div>
+    <!-- Custom directive: directive in JS is camelCase, and is converted to hyphenated directive for use in HTML -->
+    <cc-spinner></cc-spinner>
 </div>

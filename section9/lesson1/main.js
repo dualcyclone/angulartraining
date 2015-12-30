@@ -71,6 +71,13 @@ app.factory('Contact', function($resource) {
     });
 });
 
+// Custom directive for the spinner, use <cc-spinner></cc-spinner> in the HTML to use it (Angular auto converts the camelCase reference to hyphenated-reference for use in the HTML)
+app.directive('ccSpinner', function() {
+    return {
+        templateUrl: 'templates/spinner.html'
+    };
+});
+
 app.filter('defaultImage', function() {
     return function(input, param) {
         // if no input, return the provided default
