@@ -82,10 +82,17 @@ app.directive('ccSpinner', function() {
             ... otherwise, configuring this, you can restrict to any of these combinations, eg:
             A, E, C, AE (default anyway), CE, AC, AEC, etc...
          */
-        'restrict': 'E',
+        restrict: 'E',
         templateUrl: 'templates/spinner.html',
+
         // transclude will load in the inner HTML from the directive include in the HTML to the directive template if ng-transclude is added to the template
-        'transclude': true
+        transclude: true,
+
+        // isolating the scope from the scope that may exist outside of the directive
+        scope: {
+            isLoading: '=' // defines a two-way binding, so changing the isLoading value within this scope will change it with the value that has been linked to it also
+        }
+
     };
 });
 
