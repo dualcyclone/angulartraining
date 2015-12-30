@@ -58,7 +58,7 @@ app.filter('defaultImage', function() {
     };
 });
 
-app.service('ContactService', function(Contact, $q, toaster) {
+app.service('ContactService', function(Contact, $rootScope, $q, toaster) {
 	var self = {
         'addPerson': function (person) {
             this.persons.push(person);
@@ -82,19 +82,11 @@ app.service('ContactService', function(Contact, $q, toaster) {
         'isUpdating': false,
         'isDeleting': false,
         'search': '',
-        'soerting': '',
-        'doSearch': function(search) {
+        'sorting': '',
+        'reset': function() {
             self.hasMore = true;
             self.page = 1;
             self.persons = [];
-            self.search = search;
-            self.loadContacts();
-        },
-        'doSorting': function(sorting) {
-            self.hasMore = true;
-            self.page = 1;
-            self.persons = [];
-            self.sorting = sorting;
             self.loadContacts();
         },
         'loadContacts': function() {
@@ -186,12 +178,26 @@ app.service('ContactService', function(Contact, $q, toaster) {
 
     self.loadContacts();
 
+    // Add watchers
+    $rootScope.$watch(function() {
+        return self.search;
+    }, function(value) {
+        if (angular.isDefined(value)) {
+            self.reset();
+        }
+    });
+    $rootScope.$watch(function() {
+        return self.sorting;
+    }, function(value) {
+        if (angular.isDefined(value)) {
+            self.reset();
+        }
+    });
+
 	return self;
 });
 
-app.controller('PersonListController', function($scope, $filter, ContactService, $modal) {
-	$scope.search = ''; // initialise the search value
-	$scope.sorting = ''; // initialise as no predefined order - this will also map to the "Select order" option in the form
+app.controller('PersonListController', function($scope, $modal, ContactService) {
 	$scope.contacts = ContactService;
 
 	// helper to find if the selected person exists in the filtered subset
@@ -207,18 +213,6 @@ app.controller('PersonListController', function($scope, $filter, ContactService,
     $scope.loadMore = function() {
         $scope.contacts.loadMore();
     };
-
-    $scope.$watch('search', function(value, oldValue) {
-        if (angular.isDefined(value) && (value !== oldValue)) {
-            $scope.contacts.doSearch(value);
-        }
-    });
-
-    $scope.$watch('sorting', function(value, oldValue) {
-        if (angular.isDefined(value) && (value !== oldValue)) {
-            $scope.contacts.doSorting(value);
-        }
-    });
 
     $scope.showCreateModal = function() {
         $scope.contacts.selectedPerson = null;
