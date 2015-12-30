@@ -18,6 +18,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
         controller: 'PersonListController'
     });
 
+    $stateProvider.state('edit', {
+        url: '/edit/:id',
+        templateUrl: 'templates/edit.html',
+        controller: 'PersonDetailController'
+    });
+
     $urlRouterProvider.otherwise('/');
 });
 
@@ -56,6 +62,11 @@ app.service('ContactService', function(Contact, $q, toaster) {
 	var self = {
         'addPerson': function (person) {
             this.persons.push(person);
+        },
+        'getPerson': function(id) {
+            return self.persons.find(function(person) {
+                return +person.id === +id; // convert string to number so that these always match correctly
+            });
         },
         'selectedPerson': null,
         'selectPerson': function(person) {
@@ -210,8 +221,10 @@ app.controller('PersonListController', function($scope, $filter, ContactService,
     };
 });
 
-app.controller('PersonDetailController', function($scope, ContactService) {
+app.controller('PersonDetailController', function($scope, $stateParams, ContactService) {
 	$scope.contacts = ContactService;
+
+    $scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.id) || null;
 
     $scope.save = function() {
         $scope.contacts.updateContact($scope.contacts.selectedPerson);
