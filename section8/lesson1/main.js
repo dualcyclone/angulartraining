@@ -13,16 +13,20 @@ var app = angular.module('codecraft', [
 // configure routing
 app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('list', {
-        url: '/',
-        templateUrl: 'templates/list.html',
-        controller: 'PersonListController'
-    });
-
-    $stateProvider.state('edit', {
-        url: '/edit/:id',
-        templateUrl: 'templates/edit.html',
-        controller: 'PersonDetailController'
-    });
+            url: '/',
+            templateUrl: 'templates/list.html',
+            controller: 'PersonListController'
+        })
+        .state('edit', {
+            url: '/edit/:id',
+            templateUrl: 'templates/edit.html',
+            controller: 'PersonDetailController'
+        })
+        .state('create', {
+            url: '/create',
+            templateUrl: 'templates/edit.html',
+            controller: 'PersonCreateController'
+        });
 
     $urlRouterProvider.otherwise('/');
 });
@@ -213,24 +217,11 @@ app.controller('PersonListController', function($scope, $modal, ContactService) 
     $scope.loadMore = function() {
         $scope.contacts.loadMore();
     };
-
-    $scope.showCreateModal = function() {
-        $scope.contacts.selectedPerson = null;
-        $scope.createModal = $modal({
-            scope: $scope,
-            template: 'templates/modal.create.tpl.html',
-            show: true
-        });
-    };
-
-    $scope.createContact = function() {
-        $scope.contacts.createContact($scope.contacts.selectedPerson).then(function() {
-            $scope.createModal.hide();
-        });
-    };
 });
 
 app.controller('PersonDetailController', function($scope, $stateParams, $state, ContactService) {
+    $scope.mode = "Edit";
+
 	$scope.contacts = ContactService;
 
     var returnToList = function() {
@@ -245,5 +236,17 @@ app.controller('PersonDetailController', function($scope, $stateParams, $state, 
 
     $scope.delete = function() {
         $scope.contacts.deleteContact($scope.contacts.selectedPerson).then(returnToList);
+    };
+});
+
+app.controller('PersonCreateController', function($scope, $state, ContactService) {
+    $scope.mode = "Create";
+
+    $scope.contacts = ContactService;
+
+    $scope.save = function() {
+        $scope.contacts.createContact($scope.contacts.selectedPerson).then(function() {
+            $state.go('list');
+        });
     };
 });
