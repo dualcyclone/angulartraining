@@ -74,6 +74,15 @@ app.factory('Contact', function($resource) {
 // Custom directive for the spinner, use <cc-spinner></cc-spinner> in the HTML to use it (Angular auto converts the camelCase reference to hyphenated-reference for use in the HTML)
 app.directive('ccSpinner', function() {
     return {
+        /*
+            Restrict tells the directive in what ways it can be used:
+            A - Attribute (eg: <div cc-spinner></div> (by default))
+            E - Element (eg <cc-spinner></cc-spinner> (by default))
+            C - Class (eg <div class="cc-spinner"></div> (off by default, need to use this to enable))
+            ... otherwise, configuring this, you can restrict to any of these combinations, eg:
+            A, E, C, AE (default anyway), CE, AC, AEC, etc...
+         */
+        'restrict': 'E',
         templateUrl: 'templates/spinner.html'
     };
 });
