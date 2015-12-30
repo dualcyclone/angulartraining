@@ -10,6 +10,16 @@ var app = angular.module('codecraft', [
     'ui.router'
 ]);
 
+// configure routing
+app.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider.state('list', {
+        url: '/',
+        templateUrl: 'templates/list.html'
+    });
+
+    $urlRouterProvider.otherwise('/');
+});
+
 app.config(function($httpProvider, $resourceProvider, laddaProvider, $datepickerProvider) {
 	$httpProvider.defaults.headers.common['Authorization'] = 'Token da4eb42da465bc8d3334f33b4d16fd68d4882885';
 	$resourceProvider.defaults.stripTrailingSlashes = false;
