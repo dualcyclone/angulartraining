@@ -49,12 +49,7 @@
 
     <!-- Custom directive: directive in JS is camelCase, and is converted to hyphenated directive for use in HTML -->
     <!-- cc-spinner is the "function name", the is-loading attribute is simply a parameter passed to the function -->
-    <cc-spinner is-loading="contacts.isLoading">
-        <span>
-            <p>Loading...</p>
-            <p>Please be patient</p>
-        </span>
-    </cc-spinner>
+    <cc-spinner is-loading="contacts.isLoading" message="{{ contacts.search ? 'Searching for ' + contacts.search : 'Loading'}}..."></cc-spinner>
     <!--
         can also be defined as:
         <div cc-spinner></div>
