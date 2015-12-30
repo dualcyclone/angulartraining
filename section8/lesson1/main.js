@@ -128,13 +128,24 @@ app.service('ContactService', function(Contact, $q, toaster) {
         },
         'updateContact': function(person) {
             self.isUpdating = true;
+
+            var deferred = $q.defer();
+
             person.$update().then(function() {
                 self.isUpdating = false;
+
                 toaster.pop('success', 'Updated ' + person.name);
+
+                deferred.resolve();
             });
+
+            return deferred.promise;
         },
         'deleteContact': function(person) {
             self.isDeleting = true;
+
+            var deferred = $q.defer();
+
             person.$remove().then(function() {
                 self.isDeleting = false;
 
@@ -145,7 +156,11 @@ app.service('ContactService', function(Contact, $q, toaster) {
                 self.selectedPerson = null;
 
                 toaster.pop('success', 'Deleted ' + person.name);
+
+                deferred.resolve();
             });
+
+            return deferred.promise;
         },
         'createContact': function(person) {
             var deferred = $q.defer();
@@ -221,16 +236,20 @@ app.controller('PersonListController', function($scope, $filter, ContactService,
     };
 });
 
-app.controller('PersonDetailController', function($scope, $stateParams, ContactService) {
+app.controller('PersonDetailController', function($scope, $stateParams, $state, ContactService) {
 	$scope.contacts = ContactService;
+
+    var returnToList = function() {
+        $state.go('list');
+    };
 
     $scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.id) || null;
 
     $scope.save = function() {
-        $scope.contacts.updateContact($scope.contacts.selectedPerson);
+        $scope.contacts.updateContact($scope.contacts.selectedPerson).then(returnToList);
     };
 
     $scope.delete = function() {
-        $scope.contacts.deleteContact($scope.contacts.selectedPerson);
+        $scope.contacts.deleteContact($scope.contacts.selectedPerson).then(returnToList);
     };
 });
