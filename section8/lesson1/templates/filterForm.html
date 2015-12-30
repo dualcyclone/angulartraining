@@ -6,7 +6,8 @@
                class="form-control"
                id="name"
                placeholder="Search by anything..."
-               ng-model="contacts.search"/>
+               ng-model="contacts.search"
+               ng-model-options="{ debounce: 300 }"/>
     </fieldset>
 
     <span class="fa fa-sort"></span>
