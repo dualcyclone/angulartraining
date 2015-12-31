@@ -26,8 +26,7 @@
                 </button>
                 <button type="button"
                         class="btn btn-danger btn-sm"
-                        ladda="isDeleting"
-                        ng-click="deleteUser()">
+                        ng-click="deleteUser()(user)"> <!-- Using the '&' scope, this method returns a function, and not the function itself, so the first set of parenthesis returns the function we need to call -->
                     <i class="fa fa-trash"></i>&nbsp;<span>Delete</span>
                 </button>
             </div>

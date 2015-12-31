@@ -99,7 +99,8 @@ app.directive('ccCard', function() {
         restrict: 'AE',
         templateUrl: 'templates/card.html',
         scope: {
-            user: '='
+            user: '=',
+            'deleteUser': '&'
         }
     };
 });
@@ -266,6 +267,10 @@ app.controller('PersonListController', function($scope, $modal, ContactService) 
     $scope.loadMore = function() {
         $scope.contacts.loadMore();
     };
+
+    $scope.deletePerson = function(person) {
+        $scope.contacts.deleteContact(person);
+    };
 });
 
 app.controller('PersonDetailController', function($scope, $stateParams, $state, ContactService) {
@@ -281,10 +286,6 @@ app.controller('PersonDetailController', function($scope, $stateParams, $state, 
 
     $scope.save = function() {
         $scope.contacts.updateContact($scope.contacts.selectedPerson).then(returnToList);
-    };
-
-    $scope.delete = function() {
-        $scope.contacts.deleteContact($scope.contacts.selectedPerson).then(returnToList);
     };
 });
 
