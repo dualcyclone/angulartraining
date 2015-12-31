@@ -1,0 +1,27 @@
+<form class="navbar-form navbar-left">
+    <span class="fa fa-search"></span>
+
+    <fieldset class="form-group">
+        <input type="text"
+               class="form-control"
+               id="name"
+               placeholder="Search by anything..."
+               ng-model="contacts.search"
+               ng-model-options="{ debounce: 300 }"/>
+    </fieldset>
+
+    <span class="fa fa-sort"></span>
+
+    <fieldset class="form-group">
+        <select class="form-control"
+                ng-model="contacts.sorting">
+            <option value="">Select order</option>
+            <option value="name">Name (ASC)</option>
+            <option value="-name">Name (DES)</option>
+            <option value="email">Email (ASC)</option>
+            <option value="-email">Email (DES)</option>
+            <option value="phonenumber">Phonenumber (ASC)</option>
+            <option value="-phonenumber">Phonenumber (DES)</option>
+        </select>
+    </fieldset>
+</form>
