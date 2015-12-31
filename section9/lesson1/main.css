@@ -1,6 +1,9 @@
 body {
   padding-top: 50px; }
 
+.navbar .fa {
+  color: #fff; }
+
 .main-content {
   padding: 40px 15px; }
 
@@ -20,7 +23,7 @@ body {
   width: 30%; }
 .table tr th:nth-of-type(3) {
   width: 30%; }
-.table tr th t:nth-of-type(4) {
+.table tr th:nth-of-type(4) {
   width: 30%; }
 .table tr td {
   vertical-align: middle; }
@@ -57,8 +60,5 @@ body {
     font-size: 18px; }
   .sortables span:hover {
     color: #002a80; }
-
-.fa {
-  color: #fff; }
 
 /*# sourceMappingURL=main.css.map */

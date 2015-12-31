@@ -2,6 +2,12 @@ body {
   padding-top: 50px;
 }
 
+.navbar {
+  .fa {
+    color: #fff;
+  }
+}
+
 .main-content {
   padding: 40px 15px;
 }
@@ -84,8 +90,4 @@ body {
   span:hover {
     color: #002a80;
   }
-}
-
-.fa {
-  color: #fff;
 }

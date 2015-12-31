@@ -85,15 +85,22 @@ app.directive('ccSpinner', function() {
         restrict: 'E',
         templateUrl: 'templates/spinner.html',
 
-        // transclude will load in the inner HTML from the directive include in the HTML to the directive template if ng-transclude is added to the template
-        transclude: true,
-
-        // isolating the scope from the scope that may exist outside of the directive
+        // isolating the scope from the scope that may exist outside of the directive (http://onehungrymind.com/angularjs-sticky-notes-pt-2-isolated-scope/)
         scope: {
             isLoading: '=', // defines a two-way binding, so changing the isLoading value within this scope will change it with the value that has been linked to it also
             message: '@' // passes through a direct value, which is resolved before it gets to this - so this is a direct simple variable assignment
         }
 
+    };
+});
+
+app.directive('ccCard', function() {
+    return {
+        restrict: 'AE',
+        templateUrl: 'templates/card.html',
+        scope: {
+            user: '='
+        }
     };
 });
 
