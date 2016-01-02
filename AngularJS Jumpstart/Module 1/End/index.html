@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!-- Telling the page this is an angular app, using OTS angular, using the app directive -->
+<html ng-app>
+    <head>
+        <title>AngularJS Hello World</title>
+    </head>
+    <body>
+        <!-- Creating a root-scoped variable called name using the model directive -->
+        <label for="name">Name</label> <input id="name" type="text" ng-model="name" />
+
+        <!-- Outputting the value of the "name" variable, with some extra EL to input a static "hello" prior to any text input into the text box -->
+        <p>{{ name ? 'Hello' : '' }} {{ name }}</p>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+    </body>
+</html>
