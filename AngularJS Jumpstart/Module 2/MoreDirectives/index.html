@@ -4,17 +4,20 @@
     <title>More on Directives</title>
     <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
-<!-- 
-    ng-cloak
+
+<!--
+    ng-cloak (won't be so good in this example, as we are downloading angular via the CDN)
     ng-switch
     ng-class
     ng-show
 -->
-<body 
- ng-init="data={name:'James', isVisible: true, loggedIn: true, status: 'navy'}">
+
+<body ng-init="data={name:'James', isVisible: true, loggedIn: false, status: 'red'}">
+
+    <!-- ng-cloak will set the display of this div to none until angular has initialised -->
     <div ng-cloak>
         <div ng-switch on="data.loggedIn">
-            <div ng-switch-when="true" ng-class="data.status">
+            <div ng-switch-when="true">
                 Welcome {{ data.name }}
             </div>
             <div ng-switch-default ng-class="data.status">Login</div>
@@ -24,7 +27,8 @@
             Name: <input type="text" ng-model="data.name" /> 
             {{ data.name }}
         </div>
-    </div>  
-    <script src="angular.js"></script> 
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 </body>
 </html>

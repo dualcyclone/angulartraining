@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Using Directives</title>
+</head>
+
+<!--
+    ng-init
+    ng-hide
+    ng-click
+    ng-bind / expression
+-->
+
+<body ng-init="name='Luke'">
+    <div ng-hide="isHidden">
+        Name: <input type="text" ng-model="name" />
+
+        <!-- Can use the expression {{ name }} or the below -->
+        <p ng-bind="name"></p>
+    </div>
+    <div>
+        Hide: <input type="checkbox" ng-model="isHidden" />
+    </div>
+
+    <button ng-click="name='Olivia'">Change Name</button>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+</body>
+</html>

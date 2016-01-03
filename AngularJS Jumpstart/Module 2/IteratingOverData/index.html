@@ -3,16 +3,23 @@
 <head>
     <title>Iterating Over Data</title>
 </head>
-<body ng-init="people=[{name:'John', city:'Chandler'}, {name:'Tina', city:'New York'}, {name:'Dave', city:'Seattle'}]">
+
+<!--
+    ng-repeat
+-->
+
+<body ng-init="people=[{name:'Dave', city:'London'}, {name:'Jeff', city:'Bristol'}, {name:'Heedy', city:'Liverpool'}, {name:'Danny', city:'Cardiff'}]">
 
     <ul>
         <li ng-repeat="person in people">{{ person.name }} {{ person.city }}</li>
     </ul>
-    <br />
+
+    <br/>
+
     <table>
         <tr>
-            <td>Name</td>
-            <td>City</td>
+            <th>Name</th>
+            <th>City</th>
         </tr>
         <tr ng-repeat="person in people">
             <td>{{ person.name }}</td>
@@ -20,6 +27,6 @@
         </tr>
     </table>
 
-    <script src="angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 </body>
 </html>
