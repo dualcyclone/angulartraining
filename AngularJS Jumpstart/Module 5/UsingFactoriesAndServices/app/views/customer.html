@@ -1,4 +1,4 @@
-<h2>Customers</h2>
+<h2>{{ appSettings.title }}</h2>
 
 <div>
     <!-- Passing through the property of the object we want to actual filter by -->
@@ -22,3 +22,5 @@
     </tr>
 </table>
 <p>Total customers: {{ customers.length }}</p>
+
+<footer>Version: {{ appSettings.version }}</footer>

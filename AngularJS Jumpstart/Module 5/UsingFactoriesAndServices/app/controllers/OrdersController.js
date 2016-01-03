@@ -7,7 +7,13 @@
         $scope.customer = undefined;
 
         function init() {
-            $scope.customer = CustomerFactory.getCustomer(customerId);
+            CustomerFactory.getCustomer(customerId)
+                .success(function(customer) {
+                    $scope.customer = customer;
+                })
+                .error(function(data, status, headers, config) {
+                    $log.log(data.error, status);
+                });
         }
         init();
     };

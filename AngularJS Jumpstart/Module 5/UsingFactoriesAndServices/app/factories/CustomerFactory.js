@@ -1,92 +1,23 @@
 (function(){
     var app = angular.module('customerApp');
 
-    var CustomerFactory = function () {
-        var customers = [
-            {
-                id: 1,
-                joined: '2000-12-02',
-                name:'John',
-                city:'Chandler',
-                orderTotal: 9.9956,
-                orders: [
-                    {
-                        id: 1,
-                        product: 'Shoes',
-                        total: 9.9956
-                    }
-                ]
-            },
-            {
-                id: 2,
-                joined: '1965-01-25',
-                name:'Zed',
-                city:'Las Vegas',
-                orderTotal: 19.99,
-                orders: [
-                    {
-                        id: 2,
-                        product: 'Baseball',
-                        total: 9.995
-                    },
-                    {
-                        id: 3,
-                        product: 'Bat',
-                        total: 9.995
-                    }
-                ]
-            },
-            {
-                id: 3,
-                joined: '1944-06-15',
-                name:'Tina',
-                city:'New York',
-                orderTotal:44.99,
-                orders: [
-                    {
-                        id: 4,
-                        product: 'Headphones',
-                        total: 44.99
-                    }
-                ]
-            },
-            {
-                id: 4,
-                joined: '1995-03-28',
-                name:'Dave',
-                city:'Seattle',
-                orderTotal:101.50,
-                orders: [
-                    {
-                        id: 5,
-                        product: 'Kindle',
-                        total: 101.50
-                    }
-                ]
-            }
-        ],
-            factory = {};
+    // TODO: BE SURE TO RUN THE APP ON THE SAME DOMAIN AND PORT AS THE NODE SERVER PROVIDING THE DATA, OTHERIWSE YOU'LL RUN INTO CROSS-DOMAIN SCRPTIING ISSUES
+
+    var CustomerFactory = function ($http) {
+        var factory = {};
 
         factory.getCustomers = function () {
-            return customers;
+            return $http.get('http://localhost:8080/customers');
         };
 
         factory.getCustomer = function (customerId) {
-            var cust = {};
-
-            customers.forEach(function(customer) {
-                if (customer.id === customerId) {
-                    cust = customer;
-                    return true;
-                }
-                return false;
-            });
-
-            return cust;
+            return $http.get('http://localhost:8080/customers/' + customerId);
         };
 
         return factory;
     };
+
+    //CustomerFactory.$inject = ['$http'];
 
     app.factory('CustomerFactory', CustomerFactory);
 }());

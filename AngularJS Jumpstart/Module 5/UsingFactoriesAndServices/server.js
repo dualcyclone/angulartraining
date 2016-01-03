@@ -1,12 +1,7 @@
 var express = require('express'),
-    app = express();
+    app = express(),
+    customers;
 
-//Express 3
-//app.configure(function() {
-//    app.use(express.static(__dirname, '/'));
-//});
-
-//Express 4
 app.use(express.static(__dirname, '/'));
 
 app.get('/customers/:id', function(req, res) {
@@ -23,6 +18,7 @@ app.get('/customers/:id', function(req, res) {
 
 app.get('/customers', function(req, res) {
     res.json(customers);
+    // todo: use this to execute the error method of the promises within the controllers
     //res.json(500, { error: 'An error has occurred!' });
 });
 
@@ -54,5 +50,69 @@ app.delete('/customers/:id', function(req, res) {
 app.listen(8080);
 
 console.log('Express listening on port 8080');
+
+customers = [
+    {
+        id: 1,
+        joined: '2000-12-02',
+        name:'John',
+        city:'Chandler',
+        orderTotal: 9.9956,
+        orders: [
+            {
+                id: 1,
+                product: 'Shoes',
+                total: 9.9956
+            }
+        ]
+    },
+    {
+        id: 2,
+        joined: '1965-01-25',
+        name:'Zed',
+        city:'Las Vegas',
+        orderTotal: 19.99,
+        orders: [
+            {
+                id: 2,
+                product: 'Baseball',
+                total: 9.995
+            },
+            {
+                id: 3,
+                product: 'Bat',
+                total: 9.995
+            }
+        ]
+    },
+    {
+        id: 3,
+        joined: '1944-06-15',
+        name:'Tina',
+        city:'New York',
+        orderTotal:44.99,
+        orders: [
+            {
+                id: 4,
+                product: 'Headphones',
+                total: 44.99
+            }
+        ]
+    },
+    {
+        id: 4,
+        joined: '1995-03-28',
+        name:'Dave',
+        city:'Seattle',
+        orderTotal:101.50,
+        orders: [
+            {
+                id: 5,
+                product: 'Kindle',
+                total: 101.50
+            }
+        ]
+    }
+];
 
         
