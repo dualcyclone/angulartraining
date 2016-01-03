@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="demoApp">
+<head>
+    <title>Iterating Over Data</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<!--
+    Using "as" in the controller directive defines the scope without needing $scope - good for nested controllers
+-->
+
+<body ng-controller="CustomerController as ctrl">
+<h2>Customers</h2>
+
+<div>
+    <!-- Passing through the property of the object we want to actual filter by -->
+    Filter: <input type="text" ng-model="customerFilter.name"/>
+</div>
+
+<table>
+    <tr>
+        <th ng-click="ctrl.doSort('name')">Name</th>
+        <th ng-click="ctrl.doSort('city')">City</th>
+        <th ng-click="ctrl.doSort('orderTotal')">Order Total</th>
+        <th ng-click="ctrl.doSort('joined')">Joined</th>
+    </tr>
+    <tr ng-repeat="cust in ctrl.customers | filter:customerFilter | orderBy:ctrl.customerSorting:reverse">
+        <td>{{ cust.name }}</td>
+        <td>{{ cust.city }}</td>
+        <td>{{ cust.orderTotal | currency:"Y" }}</td>
+        <td>{{ cust.joined | date:'dd MMM yyyy' }}</td>
+    </tr>
+</table>
+<p>Total customers: {{ ctrl.customers.length }}</p>
+
+<script src="../../lib/angular.js"></script>
+<script src="app/controllers/CustomerControllerUsingAs.js"></script>
+</body>
+</html>

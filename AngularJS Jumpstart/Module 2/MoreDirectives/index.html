@@ -6,7 +6,7 @@
 </head>
 
 <!--
-    ng-cloak (won't be so good in this example, as we are downloading angular via the CDN)
+    ng-cloak (won't be so good if using angular via the CDN, as ng-cloak is a style applied before angular is initialised, and is included via the lib source)
     ng-switch
     ng-class
     ng-show
@@ -29,6 +29,6 @@
         </div>
     </div>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+    <script src="../../lib/angular.js"></script>
 </body>
 </html>
