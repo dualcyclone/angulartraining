@@ -1,12 +1,22 @@
 (function(){
-    // When referencing our module via angular, we do not need to inject any dependencies, hence the lack of [].
     var app = angular.module('customerApp');
 
-    // Defining our controller
-    var CustomerController = function ($scope) {
-        $scope.customerSorting = '';
-        $scope.reverse = false;
+    var OrdersController = function ($scope, $routeParams) {
+        var customerId = +$routeParams.customerId;
 
+        $scope.orders = undefined;
+
+        function init() {
+            $scope.customers.forEach(function(customer) {
+                 if (customer.id === customerId) {
+                     $scope.orders = customer.orders;
+                     return true;
+                 }
+                 return false;
+             })
+        }
+
+        // repeated data fixed later in course
         $scope.customers= [
             {
                 id: 1,
@@ -71,15 +81,10 @@
             }
         ];
 
-        $scope.doSort = function(propName) {
-            $scope.customerSorting = propName;
-            $scope.reverse = !$scope.reverse;
-        };
+        init();
     };
 
-    // if using minification, using this assignment will fix the dependency injection when the argument names are minified
-    //CustomerController.$inject = ['$scope']; // needs to be in the exact same order as the actual function arguments
+    //OrdersController.$inject = ['$scope', $routeParams];
 
-    // Hook the controller to the controller reference in the app
-    app.controller('CustomerController', CustomerController);
+    app.controller('OrdersController', OrdersController);
 }());
