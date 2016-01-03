@@ -1,17 +1,20 @@
 <!doctype html>
-<html ng-app="customersApp">
+<html ng-app="customerApp">
 <head>
     <title>Iterating Over Data</title>
     <link href="styles/styles.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    
-    <div ng-view></div>
-    
-    <script src="scripts/angular.js"></script>
-    <script src="scripts/angular-route.js"></script>
-    <script src="app/app.js"></script>
-    <script src="app/controllers/customersController.js"></script>
-    <script src="app/controllers/ordersController.js"></script>
+
+<div ng-view></div>
+
+<script src="../../lib/angular.js"></script>
+<script src="../../lib/angular-route.js"></script> <!-- http://code.angularjs.org/1.4.7 -->
+
+<script src="app/app.js"></script>
+<script src="app/config/routes.js"></script>
+<script src="app/controllers/CustomerController.js"></script>
+<script src="app/controllers/OrdersController.js"></script>
 </body>
 </html>

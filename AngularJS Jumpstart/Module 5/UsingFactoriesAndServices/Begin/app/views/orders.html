@@ -6,6 +6,6 @@
     </tr>
     <tr ng-repeat="order in orders">
         <td>{{ order.product }}</td>
-        <td>{{ order.total | currency }}</td>
+        <td>{{ order.total | currency:'Y' }}</td>
     </tr>
 </table>

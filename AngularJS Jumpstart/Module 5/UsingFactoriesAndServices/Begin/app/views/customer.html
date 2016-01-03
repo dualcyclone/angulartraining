@@ -1,0 +1,24 @@
+<h2>Customers</h2>
+
+<div>
+    <!-- Passing through the property of the object we want to actual filter by -->
+    Filter: <input type="text" ng-model="customerFilter.name"/>
+</div>
+
+<table>
+    <tr>
+        <th ng-click="doSort('name')">Name</th>
+        <th ng-click="doSort('city')">City</th>
+        <th ng-click="doSort('orderTotal')">Order Total</th>
+        <th ng-click="doSort('joined')">Joined</th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="cust in customers | filter:customerFilter | orderBy:customerSorting:reverse">
+        <td>{{ cust.name }}</td>
+        <td>{{ cust.city }}</td>
+        <td>{{ cust.orderTotal | currency:"Y" }}</td>
+        <td>{{ cust.joined | date:'dd MMM yyyy' }}</td>
+        <td><a href="#/orders/{{ cust.id }}">View orders</a></td>
+    </tr>
+</table>
+<p>Total customers: {{ customers.length }}</p>
