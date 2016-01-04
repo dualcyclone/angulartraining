@@ -2,12 +2,24 @@
 <html ng-app="customerApp">
 <head>
     <title>Iterating Over Data</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
-<div ng-view></div>
+<header>
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li><a href="#/customers">Customers</a></li>
+            <li><a href="#/orders">Orders</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div ng-view></div>
+</main>
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
@@ -16,7 +28,8 @@
 <script src="app/config/values.js"></script>
 <script src="app/config/routes.js"></script>
 <script src="app/controllers/CustomerController.js"></script>
-<script src="app/controllers/OrdersController.js"></script>
+<script src="app/controllers/CustomerOrdersController.js"></script>
+<script src="app/controllers/AllOrdersController.js"></script>
 <script src="app/factories/CustomerFactory.js"></script>
 <script src="app/services/CustomerService.js"></script>
 </body>

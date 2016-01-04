@@ -5,20 +5,22 @@
     Filter: <input type="text" ng-model="customerFilter.name"/>
 </div>
 
-<table>
+<table class="table table-striped">
     <tr>
         <th ng-click="doSort('name')">Name</th>
         <th ng-click="doSort('city')">City</th>
         <th ng-click="doSort('orderTotal')">Order Total</th>
         <th ng-click="doSort('joined')">Joined</th>
-        <th></th>
+        <th>Orders</th>
+        <th>&nbsp;</th>
     </tr>
     <tr ng-repeat="cust in customers | filter:customerFilter | orderBy:customerSorting:reverse">
         <td>{{ cust.name }}</td>
         <td>{{ cust.city }}</td>
         <td>{{ cust.orderTotal | currency:"Y" }}</td>
         <td>{{ cust.joined | date:'dd MMM yyyy' }}</td>
-        <td><a href="#/orders/{{ cust.id }}">View orders</a></td>
+        <td><a href="#/orders/{{ cust.id }}">View Orders</a></td>
+        <td class="center"><span class="glyphicon glyphicon-remove delete" ng-click="deleteCustomer(cust.id)"></span></td>
     </tr>
 </table>
 <p>Total customers: {{ customers.length }}</p>
