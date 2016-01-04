@@ -2,8 +2,10 @@
 <html ng-app="customerApp">
 <head>
     <title>Iterating Over Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet" type="text/css" />
+    <link href="styles/animations.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -18,11 +20,12 @@
 </header>
 
 <main>
-    <div ng-view></div>
+    <div ng-view class="slide-animation"></div>
 </main>
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
 
 <script src="app/app.js"></script>
 <script src="app/config/values.js"></script>

@@ -1,5 +1,6 @@
 (function(){
     angular.module('customerApp', [
-        'ngRoute'
+        'ngRoute',
+        'ngAnimate'
     ]);
 }());

@@ -9,7 +9,7 @@
         <th>Product</th>
         <th>Total</th>
     </tr>
-    <tr ng-repeat="order in orders | filter:orderFilter | orderBy:'name'">
+    <tr ng-repeat="order in orders | filter:orderFilter | orderBy:'name'" class="repeat-animation">
         <td>{{ order.product }}</td>
         <td>{{ order.total | currency:'Y' }}</td>
     </tr>
