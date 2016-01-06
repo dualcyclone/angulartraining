@@ -1,0 +1,36 @@
+<div class="col-md-6">
+    <div class="well well-sm">
+        <div class="row">
+            <div class="col-md-4">
+                <img ng-src="{{ user.photo | defaultImage:'./i/avatar.png' }}" alt="Photo for {{ user.name }}" class="img-rounded img-responsive"/>
+            </div>
+            <div class="col-md-8">
+                <h4>{{ user.name }}
+                    <i class="fa" ng-class="{'fa-female':user.sex === 'F', 'fa-male': user.sex === 'M'}"></i>
+                </h4>
+                <small>
+                    <span>{{ user.city }}, {{ user.country }}</span>
+                    <i class="fa fa-map-marker"></i>
+                </small>
+                <p>
+                    <i class="fa fa-envelope-o"></i>
+                    <span>{{ user.email }}</span>
+                    <br/>
+                    <i class="fa fa-gift"></i>
+                    <span>{{ user.birthdate | date:"longDate"}}</span>
+                </p>
+                <button type="button"
+                        class="btn btn-default btn-sm"
+                        ui-sref="edit({id:user.id})">
+                    <i class="fa fa-pencil"></i>&nbsp;<span>Edit</span>
+                </button>
+                <button type="button"
+                        class="btn btn-danger btn-sm"
+                        ladda="isDeleting"
+                        ng-click="deleteUser()"> <!-- Using the '&' scope, this method returns a function, and not the function itself, so the first set of parenthesis returns the function we need to call -->
+                    <i class="fa fa-trash"></i>&nbsp;<span>Delete</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
