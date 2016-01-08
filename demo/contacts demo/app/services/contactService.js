@@ -40,7 +40,7 @@
                         'page': self.page,
                         'search': self.search,
                         'ordering': self.sorting
-                    }
+                    };
 
                     Contact.get(params, function(data) {
                         angular.forEach(data.results, function (person) {
